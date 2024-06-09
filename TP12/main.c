@@ -87,11 +87,11 @@ result =  init_gpio_out_pin(8, leds);
 			printf("Encendiendo leds\n");
 			
 			for(i=0; i <= 7; i++) {
-				int result = set_pin(leds[c-'0'], 1);
+				int result = set_pin(leds[i], 1);
 				if(result == ERR_UNACCESIBLE) {
 					printf("Error de controlador al intentar encender led %c, intente de nuevo\n", c);
 				} else {
-					leds[c-'0'].value = result;
+					leds[i].value = result;
 				}
 			}
 		
@@ -99,21 +99,21 @@ result =  init_gpio_out_pin(8, leds);
 		
 			printf("Apagando leds\n");
 			for(i=0; i <= 7; i++) {
-				int result = set_pin(leds[c-'0'], 0);
+				int result = set_pin(leds[i], 0);
 				if(result == ERR_UNACCESIBLE) {
 					printf("Error de controlador al intentar apagar led %c, intente de nuevo\n", c);
 				} else {
-					leds[c-'0'].value = result;
+					leds[i].value = result;
 				}
 			}
 		} else if(c == 't') {
 			printf("Cambiando leds\n");
 			for(i=0; i <= 7; i++) {
-				int result = set_pin(leds[c-'0'], ! (leds[c-'0'].value) );
+				int result = set_pin(leds[i], ! (leds[i].value) );
 				if(result == ERR_UNACCESIBLE) {
 					printf("Error de controlador al intentar cambiar led %c, intente de nuevo\n", c);
 				} else {
-					leds[c-'0'].value = result;
+					leds[i].value = result;
 				}
 			}
 		} else if(c == 'q') {
