@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 #include "constants.h"
 #include "gpio_manage.h"
 
@@ -41,7 +38,7 @@ int init_gpio_out_pin(int numPins, pin_t pins[]) {
 	for(i = 0 ; i < numPins ; i++) {
 		result = fputs(pins[i].name, export_handle);
 		fflush(export_handle);
-		if(result == EOF) return ERR_UNACCESIBLE;
+		if(result == EOF) return ERR_CANT_EXPORT;
 	}
 
 
@@ -55,11 +52,11 @@ int init_gpio_out_pin(int numPins, pin_t pins[]) {
 
 		// Abrir y escribir en el archivo direction
 		pins[i].direction_file = fopen(string_buffer, "w");
-		if(pins[i].direction_file == NULL) return ERR_UNACCESIBLE;
+		if(pins[i].direction_file == NULL) return ERR_DIRECTION;
 		
 		result = fputs("out", pins[i].direction_file);
 		fclose(pins[i].direction_file);
-		if(result == EOF) return ERR_UNACCESIBLE;
+		if(result == EOF) return ERR_DIRECTION;
 	}
 	
 	// Abrir los archivos de value para q ya despues se puedan escribir
