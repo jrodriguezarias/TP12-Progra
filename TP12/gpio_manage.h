@@ -1,6 +1,10 @@
 #ifndef GPIO_MANAGE_H
 #define GPIO_MANAGE_H
 
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
 typedef struct {
 	char name[4];
 	int value;
