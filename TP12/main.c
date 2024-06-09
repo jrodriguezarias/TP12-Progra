@@ -20,7 +20,7 @@ int main()
 		c=getchar();
 		if(c == 'q') {
 			printf("Saliendo del programa\n");
-			// deinit_gpio_out_module(leds, 8);
+			deinit_gpio_out_module(leds, 8);
 			return 1;
 		}
 		while(c != '\n') c = getchar();
@@ -37,7 +37,7 @@ int main()
 		c=getchar();
 		if(c == 'q') {
 			printf("Saliendo del programa\n");
-			// deinit_gpio_out_module(leds, 8);
+			deinit_gpio_out_module(leds, 8);
 			return 1;
 		}
 		while(c != '\n') c = getchar();
@@ -116,8 +116,6 @@ result =  init_gpio_out_pin(8, leds);
 					leds[i].value = result;
 				}
 			}
-		} else if(c == 'q') {
-			printf("Saliendo del programa\n");
 		} else {
 			printf ("Comando desconocido\n");
 			printf("%s", explicacion);
@@ -129,8 +127,9 @@ result =  init_gpio_out_pin(8, leds);
 
 	}
 
-	
-	// deinit_gpio_out_module(leds, 8);
-	
+	printf("Liberando controlador de pines de led\n");
+	deinit_gpio_out_module(leds, 8);
+	printf("Saliendo del programa\n");
+
 	return 0;
 }

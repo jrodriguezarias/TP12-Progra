@@ -1,15 +1,16 @@
 #include "constants.h"
 #include "gpio_manage.h"
+#include <time.h> // sleep (int ms)
 
-// Falta la funcion de unexport, igual con esto ya podemos probar
+
 
 static const char export_path[] = "/sys/class/gpio/export";
-// static const char unexport_path[] = "/sys/class/gpio/unexport";
+static const char unexport_path[] = "/sys/class/gpio/unexport";
 static const char gpio_dir_path[] = "/sys/class/gpio/gpio";
 static char string_buffer[ sizeof(gpio_dir_path) + 20 ]; // esto para tener espacio para copiar los strings
 
 static FILE* export_handle = NULL;
-// static FILE* unexport_handle = NULL;
+static FILE* unexport_handle = NULL;
 
 
 int init_gpio_out_module() {
@@ -41,6 +42,7 @@ int init_gpio_out_pin(int numPins, pin_t pins[]) {
 		if(result == EOF) return ERR_CANT_EXPORT;
 	}
 
+	delay (10); // Frena 10 ms para q el SO pueda generar todos los archivos de direction y value
 
 	// Ponerlos en modo out
 	for(i = 0 ; i < numPins ; i++) {
@@ -89,4 +91,39 @@ int set_pin(pin_t pin, int value) {
 	fflush(pin.value_file);
 	
 	return value;
+}
+
+int deinit_gpio_out_module(pin_t pins[], int size) {
+
+	int i;
+
+	unexport_handle = fopen(unexport_path, "w");
+	if(unexport_handle == NULL) return ERR_UNACCESIBLE; 
+	
+	if(export_handle != NULL) fclose(export_handle);
+
+	delay(10); // Frena x las dudas para poder usar bien el unexport_handle
+	for(i = 0; i < size; i++) {
+		if(pins[i].direction_file != NULL) fclose( pins[i].direction_file );
+		if(pins[i].value_file != NULL) fclose( pins[i].value_file );
+		fputs(pins[i].name, unexport_handle);
+	}
+
+	return 0;
+
+}
+
+
+
+
+
+
+
+void delay(int ms)
+{
+    // Storing start time
+    clock_t start_time = clock();
+ 
+    // looping till required time is not achieved
+    while (clock() < start_time + ms);
 }

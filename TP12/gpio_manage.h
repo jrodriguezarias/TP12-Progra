@@ -19,4 +19,8 @@ int init_gpio_out_pin(int numPins, pin_t pins[]);
 
 int set_pin(pin_t pin, int value);
 
+int deinit_gpio_out_module(pin_t pins[], int size);
+
+void delay(int ms);
+
 #endif
