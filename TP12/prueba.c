@@ -2,16 +2,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include "constants.h"
+#include "gpio_manage.h"
 
 // Falta la funcion de unexport, igual con esto ya podemos probar
-
-typedef struct {
-	char name[4];
-	int value;
-	FILE* direction_file;
-	FILE* value_file;
-} pin_t;
-
 
 static const char export_path[] = "/sys/class/gpio/export";
 static const char unexport_path[] = "/sys/class/gpio/unexport";
@@ -20,13 +13,6 @@ static char string_buffer[ sizeof(gpio_dir_path) + 20 ]; // esto para tener espa
 
 static FILE* export_handle = NULL;
 static FILE* unexport_handle = NULL;
-
-int init_gpio_out_module();
-
-int init_gpio_out_pin(int numPins, pin_t pins[]);
-
-int set_pin(pin_t pin, int value);
-
 
 
 int init_gpio_out_module() {
