@@ -4,12 +4,12 @@
 // Falta la funcion de unexport, igual con esto ya podemos probar
 
 static const char export_path[] = "/sys/class/gpio/export";
-static const char unexport_path[] = "/sys/class/gpio/unexport";
+// static const char unexport_path[] = "/sys/class/gpio/unexport";
 static const char gpio_dir_path[] = "/sys/class/gpio/gpio";
 static char string_buffer[ sizeof(gpio_dir_path) + 20 ]; // esto para tener espacio para copiar los strings
 
 static FILE* export_handle = NULL;
-static FILE* unexport_handle = NULL;
+// static FILE* unexport_handle = NULL;
 
 
 int init_gpio_out_module() {
@@ -87,7 +87,6 @@ int set_pin(pin_t pin, int value) {
 	if(result == EOF) return ERR_UNACCESIBLE;
 	
 	fflush(pin.value_file);
-	pin.value = value;
 	
-	return 0;
+	return value;
 }
