@@ -116,6 +116,8 @@ result =  init_gpio_out_pin(8, leds);
 					leds[i].value = result;
 				}
 			}
+		} else if ( c == 'q' ) {
+			break;
 		} else {
 			printf ("Comando desconocido\n");
 			printf("%s", explicacion);
