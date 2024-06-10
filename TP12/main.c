@@ -74,7 +74,7 @@ result =  init_gpio_out_pin(8, leds);
 		
 		if(c >= '0' && c <= '7') {
 			
-			printf("Encendiendo led %c", c);
+			printf("Encendiendo led %c\n", c);
 			int result = set_pin(leds[c-'0'], 1);
 
 			if(result == ERR_UNACCESIBLE) {
